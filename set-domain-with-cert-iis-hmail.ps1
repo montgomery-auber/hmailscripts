@@ -1,5 +1,6 @@
 Set-PSDebug -Trace 2; foreach ($i in 1..3) {$i}
-$maildomain = "mail.float.i.ng"  ## ask question what domain ?
+$maildomain = $args[0]
+# "mail.float.i.ng"  ## ask question what domain ?
 $mailaddress = "admin@$maildomain"
 $NEWPASS = (New-Object System.Net.WebClient).DownloadString("http://169.254.169.254/latest/meta-data/instance-id")
 #$NEWPASS = "INSTANCE-ID"
