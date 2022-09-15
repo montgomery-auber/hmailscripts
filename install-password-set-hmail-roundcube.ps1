@@ -1,6 +1,6 @@
 Set-PSDebug -Trace 2; foreach ($i in 1..3) {$i}
 # Windows PowerShell example to check 'If File Exists' 
-$ChkFile = "C:\Windows\Web\passwords-set-to-image-id" 
+$ChkFile = "C:\Windows\Web\passwords-set-to-image-id"
 $FileExists = Test-Path $ChkFile 
 If ($FileExists -eq $True) {
 Write-Host "Script has already been run"
@@ -16,7 +16,7 @@ echo "NEWPASSHASH is $NEWPASSHASH"
 $hm = New-Object -ComObject hMailServer.Application
 #$hm.Authenticate("Administrator","INSTANCE-ID")  | Out-Null
 #This hash for "INSTANCE-ID" is AdministratorPassword=4b3004e6c847e30836afc2b1c18a8f98c3c98a5154c3fcd66172452d1419516a13688a
-$hm.Authenticate("Administrator","INSTANCE-ID") 
+$hm.Authenticate("Administrator","INSTANCE-ID")
 $dbpassblow = $hm.Utilities.BlowfishEncrypt($NEWPASS)
 echo "dbpassblow is  $dbpassblow"
 mysql  -uroot -pINSTANCE-ID --execute="SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$NEWPASS');"
