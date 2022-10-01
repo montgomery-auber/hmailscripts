@@ -27,8 +27,20 @@ $hm.Settings.SSLCertificates.DeleteByDBID(4)
 $hm.Settings.SSLCertificates.DeleteByDBID(5)
 
 $hmDelDomain = $hm.Domains.Delete()
+
+
 $hmDelDomain = $hm.Domains.DeleteByDBID(1)
 $hmDelDomain = $hm.Domains.DeleteByDBID(0)
+
+$hmDelDomain = $hm.Domains.DeleteByDBID(2)
+
+$hmDelDomain = $hm.Domains.DeleteByDBID(3)
+
+
+mysql  -uroot -p"INSTANCE-ID"  --execute="DELETE from hm_accounts"
+mysql  -uroot -p"INSTANCE-ID"  --execute="DELETE from hm_domains"
+mysql  -uroot -p"INSTANCE-ID"  --execute="DELETE from hm_sslcertificates"
+
 
 del "c:\certs\*.*"
 
@@ -38,6 +50,8 @@ Remove-WebBinding -Name "Default Web Site" -IPAddress "*" -Port 443 -HostHeader 
 Remove-WebBinding -Name "Default Web Site" -IPAddress "*" -Port 80 -HostHeader "test.float.i.ng"
 Remove-WebBinding -Name "Default Web Site" -IPAddress "*" -Port 80 -HostHeader "mail.float.i.ng"
 Remove-WebBinding -Name "Default Web Site" -IPAddress "*" -Port 80 -HostHeader "mail.float.i.ng"
+
+
 
 copy "C:\Program Files (x86)\hMailServer\Bin\hMailServer-with-INSTANCE-ID-as-hashed-pass.ini" "C:\Program Files (x86)\hMailServer\Bin\hMailServer.INI"
 
@@ -50,22 +64,12 @@ rm "C:\Windows\Web\passwords-set-to-image-id"
 # $hmAddDomain.Save()
 # $hm.Settings.HostName =  $maildomain
 # $hm.Settings.HostName.Save
-# 
-# 
-
-
 
 # $SSLCert_KEY_Private = "c:\certs\$maildomain-key.pem"
 # $SSLCert_CRT_Public = "c:\certs\$maildomain-crt.pem"
-# 
 # 
 # $hm_SSLCert_New = $hm.Settings.SSLCertificates.Delete()
 # $hm_SSLCert_New.Name = $Windows_SSLCert_Name
 # $hm_SSLCert_New.PrivateKeyFile = $SSLCert_KEY_Private
 # $hm_SSLCert_New.CertificateFile = $SSLCert_CRT_Public
 # $hm_SSLCert_New.Save()
-
-
-
-
-####   REMOVE ALL sites - would be nice to do this as wildcard or loop of existing bindings 
