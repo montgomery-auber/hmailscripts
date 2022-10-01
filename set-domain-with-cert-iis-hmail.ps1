@@ -28,6 +28,7 @@ $hm_SSLCert_New.Name = $Windows_SSLCert_Name
 $hm_SSLCert_New.PrivateKeyFile = $SSLCert_KEY_Private
 $hm_SSLCert_New.CertificateFile = $SSLCert_CRT_Public
 $hm_SSLCert_New.Save()
+$certid = mysql -ss -uroot -p"$NEWPASS" -D hmail --execute="select sslcertificateid  from hm_sslcertificates where sslcertificatename='$maildomain';"
 # Add mailbox to domain
 $maildomain = $hm.Domains.ItemByName($maildomain)
 $hmAccount = $maildomain.Accounts.Add()
@@ -48,7 +49,7 @@ $PortArray['Port25'] = @{
 	'PortNumber' = 25
 	'UseSSL' = $true
 	'ConnectionSec' = 2
-	'CertID' = 1
+	'CertID' = $certid
 }
 $PortArray['Port110'] = @{
 	'Address' = '0.0.0.0'
@@ -56,7 +57,7 @@ $PortArray['Port110'] = @{
 	'PortNumber' = 110
 	'UseSSL' = $True
 	'ConnectionSec' = 3
-	'CertID' = 1
+	'CertID' = $certid
 }
 $PortArray['Port143'] = @{
 	'Address' = '0.0.0.0'
@@ -64,7 +65,7 @@ $PortArray['Port143'] = @{
 	'PortNumber' = 143
 	'UseSSL' = $True
 	'ConnectionSec' = 3
-	'CertID' = 1
+	'CertID' = $certid
 }
 
 $PortArray['Port587'] = @{
@@ -73,7 +74,7 @@ $PortArray['Port587'] = @{
 	'PortNumber' = 587
 	'UseSSL' = $True
 	'ConnectionSec' = 3
-	'CertID' = 1
+	'CertID' = $certid
 }
 Function UpdateExistingTCPIPPort {
 	Param([hashtable]$PortArray) 
