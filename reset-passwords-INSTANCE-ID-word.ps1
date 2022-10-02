@@ -27,20 +27,16 @@ $hm.Settings.SSLCertificates.DeleteByDBID(4)
 $hm.Settings.SSLCertificates.DeleteByDBID(5)
 
 $hmDelDomain = $hm.Domains.Delete()
-
-
 $hmDelDomain = $hm.Domains.DeleteByDBID(1)
 $hmDelDomain = $hm.Domains.DeleteByDBID(0)
-
 $hmDelDomain = $hm.Domains.DeleteByDBID(2)
-
 $hmDelDomain = $hm.Domains.DeleteByDBID(3)
+$hmDelDomain = $hm.Domains.DeleteByDBID(4)
+$hmDelDomain = $hm.Domains.DeleteByDBID(5)
 
-
-mysql  -uroot -p"INSTANCE-ID"  --execute="DELETE from hm_accounts"
-mysql  -uroot -p"INSTANCE-ID"  --execute="DELETE from hm_domains"
-mysql  -uroot -p"INSTANCE-ID"  --execute="DELETE from hm_sslcertificates"
-
+mysql -D hmail -uroot -p"INSTANCE-ID"  --execute="DELETE from hm_accounts"
+mysql -D hmail -uroot -p"INSTANCE-ID"  --execute="DELETE from hm_domains"
+mysql -D hmail -uroot -p"INSTANCE-ID"  --execute="DELETE from hm_sslcertificates"
 
 del "c:\certs\*.*"
 
@@ -51,9 +47,9 @@ Remove-WebBinding -Name "Default Web Site" -IPAddress "*" -Port 80 -HostHeader "
 Remove-WebBinding -Name "Default Web Site" -IPAddress "*" -Port 80 -HostHeader "mail.float.i.ng"
 Remove-WebBinding -Name "Default Web Site" -IPAddress "*" -Port 80 -HostHeader "mail.float.i.ng"
 
-
-
+#put files with INSTANCE-ID 
 copy "C:\Program Files (x86)\hMailServer\Bin\hMailServer-with-INSTANCE-ID-as-hashed-pass.ini" "C:\Program Files (x86)\hMailServer\Bin\hMailServer.INI"
+copy "C:\inetpub\wwwroot\config\config-orig.inc.php" "C:\inetpub\wwwroot\config\config.inc.php"
 
 Restart-Service -Name hMailServer -Force
 

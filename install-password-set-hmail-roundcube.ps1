@@ -24,16 +24,16 @@ mysql  -uroot -p"$NEWPASS"  --execute="SET PASSWORD FOR 'hmail'@'localhost' = PA
 ##ADD for roundcube
 mysql  -uroot -p"$NEWPASS"  --execute="SET PASSWORD FOR 'roundcube'@'localhost' = PASSWORD('$NEWPASS');"
 #use this instead of cat or sed
-####!!! NOT needed as the set password command does it already 
-#$content = [System.IO.File]::ReadAllText("C:\Program Files (x86)\hMailServer\Bin\hMailServer-orig.INI").Replace("INSTANCE-ID",$NEWPASSHASH)
-#[System.IO.File]::WriteAllText("C:\Program Files (x86)\hMailServer\Bin\hMailServer-orig.INI.tmp", $content)
+
 $content = [System.IO.File]::ReadAllText("C:\Program Files (x86)\hMailServer\Bin\hMailServer-orig.INI").Replace("BLOWFISH",$dbpassblow)
 [System.IO.File]::WriteAllText("C:\Program Files (x86)\hMailServer\Bin\hMailServer.INI", $content)
+
 #Put the following  after blow mysql password, since it edits the real ini file 
 $hm.Settings.SetAdministratorPassword($NEWPASS)
+
 #the following will be for roundcube
-#$content = [System.IO.File]::ReadAllText("C:\inetpub\wwwroot\config\config-orig.inc.php").Replace("INSTANCE-ID",$NEWPASS)
-#[System.IO.File]::WriteAllText("C:\inetpub\wwwroot\config\config.inc.php", $content)
+$content = [System.IO.File]::ReadAllText("C:\inetpub\wwwroot\config\config-orig.inc.php").Replace("INSTANCE-ID",$NEWPASS)
+[System.IO.File]::WriteAllText("C:\inetpub\wwwroot\config\config.inc.php", $content)
 Restart-Service -Name hMailServer -Force
 
 New-Item -ItemType file "C:\Windows\Web\passwords-set-to-image-id" 
