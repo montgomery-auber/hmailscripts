@@ -23,8 +23,8 @@ mysql  -uroot -pINSTANCE-ID --execute="SET PASSWORD FOR 'root'@'localhost' = PAS
 mysql  -uroot -p"$NEWPASS"  --execute="SET PASSWORD FOR 'hmail'@'localhost' = PASSWORD('$NEWPASS');"
 ##ADD for roundcube
 mysql  -uroot -p"$NEWPASS"  --execute="SET PASSWORD FOR 'roundcube'@'localhost' = PASSWORD('$NEWPASS');"
-#use this instead of cat or sed
 
+#use this instead of cat or sed
 $content = [System.IO.File]::ReadAllText("C:\Program Files (x86)\hMailServer\Bin\hMailServer-orig.INI").Replace("BLOWFISH",$dbpassblow)
 [System.IO.File]::WriteAllText("C:\Program Files (x86)\hMailServer\Bin\hMailServer.INI", $content)
 
