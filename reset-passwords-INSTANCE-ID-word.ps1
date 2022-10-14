@@ -38,7 +38,8 @@ mysql -D hmail -uroot -p"INSTANCE-ID"  --execute="DELETE from hm_accounts"
 mysql -D hmail -uroot -p"INSTANCE-ID"  --execute="DELETE from hm_domains"
 mysql -D hmail -uroot -p"INSTANCE-ID"  --execute="DELETE from hm_sslcertificates"
 
-del "c:\certs\*.*"
+Remove-Item  "c:\certs\*.*" -Recurse
+Remove-Item "C:\Program Files (x86)\hMailServer\Data\*.*" -Recurse
 
 Remove-WebBinding -Name "Default Web Site" -IPAddress "*" -Port 443 -HostHeader "test.float.i.ng"
 Remove-WebBinding -Name "Default Web Site" -IPAddress "*" -Port 443 -HostHeader "mail.float.i.ng"

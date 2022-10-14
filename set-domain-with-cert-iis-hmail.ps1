@@ -8,7 +8,7 @@ $NEWPASS = (New-Object System.Net.WebClient).DownloadString("http://169.254.169.
 New-WebBinding -Name "Default Web Site" -IPAddress "*" -Port 80 -HostHeader "$maildomain"
 cd "C:\Program Files\win-acme.v2.1.19.1142.x64"
 .\wacs.exe --store certificatestore,pemfiles --pemfilespath c:\certs  --source manual --host $maildomain  --certificatestore My --installation iis --installationsiteid 1 --accepttos   --emailaddress $mailaddress 
-Remove-WebBinding -Name "Default Web Site" -IPAddress "*" -Port 80 -HostHeader "$maildomain"
+#Remove-WebBinding -Name "Default Web Site" -IPAddress "*" -Port 80 -HostHeader "$maildomain"
 #NOT sure if it will be needed as wacs is supposed to do it
 #New-WebBinding -Name "Default Web Site" -IPAddress "*" -Port 143 -HostHeader "$maildomain" -Protocol "https"
 $hm = New-Object -ComObject hMailServer.Application
