@@ -1,7 +1,7 @@
 ﻿# https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ec2launch.html
-#reset windows administrator password for ec2 - get from console
-#C:\ProgramData\Amazon\EC2-Windows\Launch\Scripts\InitializeInstance.ps1 -Schedule
 Set-PSDebug -Trace 2; foreach ($i in 1..3) {$i}
+& "C:\ProgramData\Amazon\EC2-Windows\Launch\Scripts\InitializeInstance.ps1" -Schedule
+sleep 1
 $NEWPASS = (New-Object System.Net.WebClient).DownloadString("http://169.254.169.254/latest/meta-data/instance-id")
 mysql  -uroot  -p"$NEWPASS"   --execute="SET PASSWORD FOR 'root'@'localhost' = PASSWORD('INSTANCE-ID');"
 mysql  -uroot -p"INSTANCE-ID"  --execute="SET PASSWORD FOR 'hmail'@'localhost' = PASSWORD('INSTANCE-ID');"
@@ -38,8 +38,13 @@ mysql -D hmail -uroot -p"INSTANCE-ID"  --execute="DELETE from hm_accounts"
 mysql -D hmail -uroot -p"INSTANCE-ID"  --execute="DELETE from hm_domains"
 mysql -D hmail -uroot -p"INSTANCE-ID"  --execute="DELETE from hm_sslcertificates"
 
-Remove-Item  "c:\certs\*.*" -Recurse
+Unregister-ScheduledTask -TaskName  "win-acme renew (acme-v02.api.letsencrypt.org)" -Confirm:$false
+
+Remove-Item "c:\certs\*.*" -Recurse
 Remove-Item "C:\Program Files (x86)\hMailServer\Data\*.*" -Recurse
+Remove-Item "C:\ProgramData\win-acme" -Recurse
+Remove-Item "C:\Program Files (x86)\hMailServer\Logs\*" -Recurse
+Remove-Item "C:\inetpub\logs\LogFiles\W3SVC1\*" -Recurse
 
 Remove-WebBinding -Name "Default Web Site" -IPAddress "*" -Port 443 -HostHeader "test.float.i.ng"
 Remove-WebBinding -Name "Default Web Site" -IPAddress "*" -Port 443 -HostHeader "mail.float.i.ng"
@@ -54,7 +59,7 @@ copy "C:\inetpub\wwwroot\config\config-orig.inc.php" "C:\inetpub\wwwroot\config\
 
 Restart-Service -Name hMailServer -Force
 
-rm "C:\Windows\Web\passwords-set-to-image-id"
+Remove-Item "C:\Windows\Web\passwords-set-to-image-id"
 
 # $hmAddDomain.Name = "$maildomain"
 # $hmAddDomain.Active = $true
