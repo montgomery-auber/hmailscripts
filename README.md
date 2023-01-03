@@ -21,3 +21,13 @@ This repo expects a bunch of stuff to be pre-installed on the Windows EC2 server
 It also needs the php.ini file in the correct place<br>
 the hmail.ini files need to be C:\Program Files (x86)\hMailServer\Bin\ 
 
+--
+
+From Windows add remove programs it says
+AWS ssm agent
+aws pv drivers - I guess for network
+aws tools for windows
+hmailserver 5.6.8-B2574
+IIS url rewrite module 2
+maria DB 10.6 - next time use mysql
+mirsosft visual C++ 2015-1019 Redistributable (x64) 14.29.3015
